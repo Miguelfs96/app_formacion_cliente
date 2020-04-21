@@ -1,3 +1,56 @@
+header{
+  padding: 1%;
+  background-color: grey;
+}
+
+nav {
+  padding: 1%;
+  background-color: rgb(104, 104, 104);
+}
+
+.content-left{
+  width: 20%;
+  padding: 1%;
+  height: 80vh;
+  background-color: #e2e2e2 ;
+}
+.main{
+  display: flex;
+  flex-direction: row;
+}
+main{
+  width: 60%;
+  padding: 1%;
+  height: 80vh;
+}
+.content-right{
+  width: 20%;
+  padding: 1%;
+  height: 80vh;
+  background-color: #3b3b3b ;
+}
+
+footer{
+  padding: 1%;
+  background-color: grey;
+}
+
+.note{
+  display: flex;
+  flex-direction: column;
+  margin-top:2% ;
+  padding: 1%;
+  background-color: whitesmoke;
+  border: solid 1px black;
+}
+
+.editor{
+  display: flex;
+  flex-direction: column;
+}
+
+/* ------------------------------------------------------------------- */
+
 .browserupgrade {
   margin: 0.2em 0;
   background: #ccc;
@@ -6,9 +59,12 @@
 }
 
 body {
+  display: flex;
+  flex-direction: column;
   background: #fafafa;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #333;
+  margin: 0px;
 }
 
 .hero-unit {
