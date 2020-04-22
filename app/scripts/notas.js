@@ -1,14 +1,14 @@
-const contEsq = document.getElementById("content-left");
+export const contEsq = document.getElementById("content-left");
 
-const generateDiv = () => {
+export const generateDiv = () => {
   return document.createElement('div')
 };
-const generateButton = () => {
+export const generateButton = () => {
   return document.createElement("button")
 };
 
 
-window.onload = () => {
+export const editor= () => {
   let container = generateDiv();
   let button = generateButton();
   let textInput = document.createElement('textarea');
@@ -27,7 +27,7 @@ window.onload = () => {
 }
 
 
-const addNote = (txt) => {
+export const addNote = (txt) => {
   let newNote = generateDiv();
   let button = generateButton();
   let text = document.createElement('p');
@@ -46,7 +46,7 @@ const addNote = (txt) => {
 }
 
 
-const removeNote = (element) => {
+export const removeNote = (element) => {
   let padre = element.parentNode;
   padre.removeChild(element);
 

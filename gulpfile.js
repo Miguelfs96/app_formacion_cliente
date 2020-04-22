@@ -1,11 +1,20 @@
 // generated on 2020-04-20 using generator-webapp 4.0.0-8
-const { src, dest, watch, series, parallel, lastRun } = require('gulp');
+const {
+  src,
+  dest,
+  watch,
+  series,
+  parallel,
+  lastRun
+} = require('gulp');
 const gulpLoadPlugins = require('gulp-load-plugins');
 const browserSync = require('browser-sync');
 const del = require('del');
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
-const { argv } = require('yargs');
+const {
+  argv
+} = require('yargs');
 
 const $ = gulpLoadPlugins();
 const server = browserSync.create();
@@ -16,28 +25,37 @@ const isProd = process.env.NODE_ENV === 'production';
 const isTest = process.env.NODE_ENV === 'test';
 const isDev = !isProd && !isTest;
 
+const browserify = require('browserify');
+const babelify = require('babelify');
+const buffer = require('vinyl-buffer');
+const source = require('vinyl-source-stream');
+
 function styles() {
   return src('app/styles/*.css', {
-    sourcemaps: !isProd,
-  })
-    .pipe($.postcss([
-      autoprefixer()
-    ]))
+      sourcemaps: !isProd,
+    })
+    .pipe($.postcss([autoprefixer()]))
     .pipe(dest('.tmp/styles', {
       sourcemaps: !isProd,
     }))
-    .pipe(server.reload({stream: true}));
+    .pipe(server.reload({
+      stream: true
+    }));
 };
 
 function scripts() {
-  return src('app/scripts/**/*.js', {
-    sourcemaps: !isProd,
-  })
+  const b = browserify({
+      entries: 'app/scripts/main.js',
+      transform: babelify,
+      debug: true
+    })
+ 
+return b.bundle()
+    .pipe(source('bundle.js'))
     .pipe($.plumber())
-    .pipe($.babel())
-    .pipe(dest('.tmp/scripts', {
-      sourcemaps: !isProd ? '.' : false,
-    }))
+    .pipe(buffer())
+    .pipe($.if(!isProd, $.sourcemaps.init({loadMaps: true})))
+    .pipe(dest('.tmp/scripts', {sourcemaps: !isProd ? '.' : false,}))
     .pipe(server.reload({stream: true}));
 };
 
@@ -45,27 +63,47 @@ function scripts() {
 const lintBase = (files, options) => {
   return src(files)
     .pipe($.eslint(options))
-    .pipe(server.reload({stream: true, once: true}))
+    .pipe(server.reload({
+      stream: true,
+      once: true
+    }))
     .pipe($.eslint.format())
     .pipe($.if(!server.active, $.eslint.failAfterError()));
 }
+
 function lint() {
-  return lintBase('app/scripts/**/*.js', { fix: true })
+  return lintBase('app/scripts/**/*.js', {
+      fix: true
+    })
     .pipe(dest('app/scripts'));
 };
+
 function lintTest() {
   return lintBase('test/spec/**/*.js');
 };
 
 function html() {
   return src('app/*.html')
-    .pipe($.useref({searchPath: ['.tmp', 'app', '.']}))
-    .pipe($.if(/\.js$/, $.uglify({compress: {drop_console: true}})))
-    .pipe($.if(/\.css$/, $.postcss([cssnano({safe: true, autoprefixer: false})])))
+    .pipe($.useref({
+      searchPath: ['.tmp', 'app', '.']
+    }))
+    .pipe($.if(/\.js$/, $.uglify({
+      compress: {
+        drop_console: true
+      }
+    })))
+    .pipe($.if(/\.css$/, $.postcss([cssnano({
+      safe: true,
+      autoprefixer: false
+    })])))
     .pipe($.if(/\.html$/, $.htmlmin({
       collapseWhitespace: true,
       minifyCSS: true,
-      minifyJS: {compress: {drop_console: true}},
+      minifyJS: {
+        compress: {
+          drop_console: true
+        }
+      },
       processConditionalComments: true,
       removeComments: true,
       removeEmptyAttributes: true,
@@ -76,7 +114,9 @@ function html() {
 }
 
 function images() {
-  return src('app/images/**/*', { since: lastRun(images) })
+  return src('app/images/**/*', {
+      since: lastRun(images)
+    })
     .pipe($.imagemin())
     .pipe(dest('dist/images'));
 };
@@ -101,7 +141,10 @@ function clean() {
 
 function measureSize() {
   return src('dist/**/*')
-    .pipe($.size({title: 'build', gzip: true}));
+    .pipe($.size({
+      title: 'build',
+      gzip: true
+    }));
 }
 
 const build = series(
