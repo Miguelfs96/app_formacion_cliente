@@ -1,4 +1,4 @@
-import {editor} from "./notas.js";
+import {editor} from './notas.js';
 
 window.onload = () =>{
     editor();
