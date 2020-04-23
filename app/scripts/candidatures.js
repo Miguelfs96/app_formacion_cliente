@@ -1,31 +1,31 @@
 import * as data from '../data/candidatures.json';
 
-const generateTable = () => {
-  let table = document.createElement('table');
-  table.classList.add("tablePrincipal");
-  return table;
-}
+//GENERADORES DE NODOS 
+const generateTable = () => document.createElement('table');
+const generateHeaderCell = () => document.createElement('th');
 const generateRow = () => document.createElement('tr');
 const generateCell = () => document.createElement('td');
 
+//ELEMENTO BASE SOBRE QUE QUE COLOCAR 
 const container = document.getElementById('container');
 
+//FUNCION PRINCIPAL
 export const generateTableCandidates = () => {
-
   let tabla = generateTable();
+  headerTable(tabla);
 
-  data.candidatures.map(element =>  firstMap(element))
+  data.candidatures.map(element => firstMap(element))
     .forEach(element => { //CAMBIAR POR FILTER CUANDO SE IMPLEMENTE EL FILTRADO
       let fila = generateRow();
-      console.log(element);
-      getProperties(element, fila);
+      printCell(element, fila);
       tabla.appendChild(fila);
     });
-
   container.appendChild(tabla);
 }
 
-const getProperties = (element, fila) => {
+
+//FUNCIONES AUXILIARES
+const printCell = (element, fila) => {
   for (const prop in element) {
     let cell = generateCell();
     cell.innerHTML = element[prop];
@@ -33,7 +33,18 @@ const getProperties = (element, fila) => {
   }
 }
 
-//Mapeos
+//MAPEOS
+
+const headerTable = (table) => {
+  let fila = generateRow();
+  let array = ["ID Puesto", "ID User", "Fecha Presentacion", "Hora", "Nombre", "Apellido", "Apellido2", "DNI", "Fecha Nacicimiento", "Tel", "Email", "Titulo"];
+  array.forEach(element => {
+    let elementoCabecera = generateHeaderCell();
+    elementoCabecera.innerHTML = element;
+    fila.appendChild(elementoCabecera);
+  })
+  table.appendChild(fila);
+}
 
 const firstMap = (element) => {
   return {

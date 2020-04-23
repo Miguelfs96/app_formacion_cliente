@@ -1,10 +1,9 @@
 import {editor} from './notas.js';
-import {generateTableCandidates} from './contain';
+import {initialPage} from './principalContent';
 
 window.onload = () =>{
     editor();
-    generateTableCandidates();
+    initialPage();
 }
 
-console.log('\'Allo \'Allo!');
 
