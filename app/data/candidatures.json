@@ -1,5 +1,6 @@
 {
-  "candidatures": [{
+  "candidatures": [
+      {
       "idCandidature": 5,
       "idCandidate": 2,
       "dataPresentacion": "20200330",
@@ -42,7 +43,7 @@
       }
     },
     {
-      "idCandidatura": 1,
+      "idCandidature": 1,
       "idCandidate": 1,
       "dataPresentacion": "20200329",
       "horaPresentacion": "232059",
