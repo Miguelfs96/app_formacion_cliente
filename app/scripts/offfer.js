@@ -1,4 +1,4 @@
-import * as data from '../data/candidatures.json';
+import * as data from '../data/offer.json';
 
 //GENERADORES DE NODOS 
 const generateHeaderCell = () => document.createElement('th');
@@ -6,19 +6,18 @@ const generateRow = () => document.createElement('tr');
 const generateCell = () => document.createElement('td');
 
 //FUNCION PRINCIPAL
-export const generateTableCandidates = () => {
-  let tabla = document.getElementById("tablaPrincipal");
+export const generateTableOffers = () => {
+  let tabla = document.getElementById('tablaPrincipal');
   resetTable(tabla);
   headerTable(tabla);
 
-  data.candidatures.map(element => firstMap(element))
+  data.internshipOffer.map(element => firstMap(element))
     .forEach(element => { //CAMBIAR POR FILTER CUANDO SE IMPLEMENTE EL FILTRADO
       let fila = generateRow();
       printCell(element, fila);
       tabla.appendChild(fila);
     });
 }
-
 
 //FUNCIONES AUXILIARES
 const printCell = (element, fila) => {
@@ -30,14 +29,14 @@ const printCell = (element, fila) => {
 }
 
 const resetTable = (table) => {
-  table.textContent = '';
-}
+    table.textContent = '';
+  }
 
 //MAPEOS
 
 const headerTable = (table) => {
   let fila = generateRow();
-  let array = ["Fecha Presentacion", "Hora", "Nombre", "Apellido", "Apellido2", "DNI", "Fecha Nacicimiento", "Tel", "Email", "Titulo"];
+  let array = ["Fecha", "Hora", "Nombre", "Requisito", "Fecha Limite"];
   array.forEach(element => {
     let elementoCabecera = generateHeaderCell();
     elementoCabecera.innerHTML = element;
@@ -48,15 +47,11 @@ const headerTable = (table) => {
 
 const firstMap = (element) => {
   return {
+
     dataPresentacion: element.dataPresentacion,
     horaPresentacion: element.horaPresentacion,
-    name: element.name,
-    surname: element.surname,
-    surname2: element.surname2,
-    dni: element.dni,
-    birthDate: element.birthDate,
-    telf: element.telf,
-    email: element.email,
-    titulacion: element.titulacionPracticas.name
+    name: element.companyData.company,
+    requestPrimaryTitulation: element.requestPrimaryTitulation.name,
+    fechaLimite: element.endDate
   }
 }

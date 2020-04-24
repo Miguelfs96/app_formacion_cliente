@@ -26,11 +26,13 @@
       "requestPrimaryTitulation": {
         "name": "Técnico Superior Desenvolvemento Aplicacións"
       },
-      "otherTitulations": [{
-        "name": "Técnico Superior Administración Sistemas en Rede "
-      }, {
-        "name": "Técnico Superior Sistemas Microinformaticos"
-      }],
+      "otherTitulations": [
+        {
+          "name": "Técnico Superior Administración Sistemas en Rede "
+        },{
+          "name": "Técnico Superior Sistemas Microinformaticos"
+        }
+      ],
       "startDate": "20200502",
       "endDate": "20200730",
       "internshipLocation": {
