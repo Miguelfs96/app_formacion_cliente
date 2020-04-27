@@ -1,6 +1,6 @@
 import * as data from '../data/offer.json';
 
-//GENERADORES DE NODOS 
+//GENERADORES DE NODOS
 const generateHeaderCell = () => document.createElement('th');
 const generateRow = () => document.createElement('tr');
 const generateCell = () => document.createElement('td');
@@ -11,7 +11,7 @@ export const generateTableOffers = () => {
   resetTable(tabla);
   headerTable(tabla);
 
-  data.internshipOffer.map(element => firstMap(element))
+  data.internshipOffer.reduce(reducidor, [])
     .forEach(element => { //CAMBIAR POR FILTER CUANDO SE IMPLEMENTE EL FILTRADO
       let fila = generateRow();
       printCell(element, fila);
@@ -32,6 +32,11 @@ const resetTable = (table) => {
     table.textContent = '';
   }
 
+const reducidor = (accum, {dataPresentacion, horaPresentacion, companyData, requestPrimaryTitulation, endDate}) =>{
+  accum.push({dataPresentacion, horaPresentacion, name:`${companyData.company}`, requestTitulacion:`${requestPrimaryTitulation.name}`, endDate});
+  return accum;
+}
+
 //MAPEOS
 
 const headerTable = (table) => {
@@ -45,13 +50,3 @@ const headerTable = (table) => {
   table.appendChild(fila);
 }
 
-const firstMap = (element) => {
-  return {
-
-    dataPresentacion: element.dataPresentacion,
-    horaPresentacion: element.horaPresentacion,
-    name: element.companyData.company,
-    requestPrimaryTitulation: element.requestPrimaryTitulation.name,
-    fechaLimite: element.endDate
-  }
-}
