@@ -8,9 +8,6 @@ const generateCell = () => document.createElement('td');
 //VARIABLES GLOBALES
 const search = {};
 
-
-//FUNCIONES PRINCIPALES
-
 /**
  * Genera la tabla candidatos y la pinta por pantalla a partir del json
  * y una fila de busqueda
@@ -78,8 +75,6 @@ const reprint = (resultados) => {
 
 }
 
-
-//FUNCIONES AUXILIARES
 
 /**
  * Genera una celda y la agrrega al nodo fila
