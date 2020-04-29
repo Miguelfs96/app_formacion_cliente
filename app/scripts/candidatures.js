@@ -15,7 +15,7 @@ const search = {};
 export const generateTableCandidates = () => {
   let tabla = document.getElementById("tablaPrincipal");
   let tbody = document.createElement('tbody');
-  tbody.setAttribute('id','tableBody')
+  tbody.setAttribute('id', 'tableBody')
   resetTable(tabla);
   filtros(tabla);
   headerTable(tabla);
@@ -48,7 +48,7 @@ const busqueda = (e) => {
         if (!new RegExp(`${search[key]}`, "i").test(candidate[key].name)) {
           isValid = false;
         }
-      }else if (!new RegExp(`${search[key]}`, "i").test(candidate[key])) {
+      } else if (!new RegExp(`${search[key]}`, "i").test(candidate[key])) {
         isValid = false;
       }
     });
@@ -56,23 +56,46 @@ const busqueda = (e) => {
 
   });
   reprint(result);
+  //generateTableCandidates();
 };
 
 /**
- * Repinta el cuerpo de la tabla a partir de un array de objetos
- * @param {Array} resultados
+ * Ordena la tabla por columna
+ * @param {event} e
+ */
+const sortTable = (e) => {
+  const key = e.target.name;
+
+  let dataSorted = data.candidatures.sort( (a, b) =>{
+    console.log(a[key]);
+     if (a[key] > b[key]) return 1;
+     if (a[key] < b[key]) return -1;
+
+     if (key === "titulacionPracticas"){
+      if (a[key].name > b[key].name) return 1;
+      if (a[key].name < b[key].name) return -1;
+     }
+     return 0;
+  })
+  reprint(dataSorted);
+  console.log(dataSorted);
+
+}
+
+/**
+ * Repinta el cuerpo de la tabla a partir de un headerContent de objetos
+ * @param  headerContent} resultados
  */
 const reprint = (resultados) => {
   let tbody = document.getElementById('tableBody');
   tbody.innerText = '';
 
-   resultados.reduce(reducidor, [])
+  resultados.reduce(reducidor, [])
     .forEach(element => {
       let fila = generateRow();
       printCell(element, fila);
       tbody.appendChild(fila);
     });
-
 }
 
 
@@ -98,11 +121,19 @@ const resetTable = (table) => {
 }
 
 /**
- * Funcion que transforma un objeto a un array de objetos clave-valor
- * @param {Array} accum
+ * Funcion que transforma un objeto a un headerContent de objetos clave-valor
+ * @param  headerContent} accum
  * @param {Object} param1
  */
-const reducidor = (accum, {dataPresentacion, name, surname, dni, telf, email, titulacionPracticas}) => {
+const reducidor = (accum, {
+  dataPresentacion,
+  name,
+  surname,
+  dni,
+  telf,
+  email,
+  titulacionPracticas
+}) => {
   accum.push({
     dataPresentacion,
     name: `${name} ${surname}`,
@@ -121,12 +152,31 @@ const reducidor = (accum, {dataPresentacion, name, surname, dni, telf, email, ti
  */
 const headerTable = (table) => {
   let fila = generateRow();
-  let array = ["Fecha", "Nombre", "DNI", "Tel", "Email", "Titulo"];
-  array.forEach(element => {
-    let elementoCabecera = generateHeaderCell();
-    elementoCabecera.innerHTML = element;
-    fila.appendChild(elementoCabecera);
-  })
+  let headerContent = {           //variable extraible
+    dataPresentacion: "Fecha",
+    name: "Nombre",
+    dni: "DNI",
+    telf: "Tel",
+    email: "Email",
+    titulacionPracticas: "Titulo"
+  };
+
+  for (const key in headerContent) {
+    if  (headerContent.hasOwnProperty(key)) {
+
+      let elementoCabecera = generateHeaderCell();
+      elementoCabecera.innerHTML = headerContent[key];
+      let botonSort = document.createElement('button');
+      botonSort.innerText = "sort";
+      botonSort.setAttribute('name', `${key}`)
+      botonSort.onclick = (e) => sortTable(e);
+
+      elementoCabecera.appendChild(botonSort);
+
+      fila.appendChild(elementoCabecera);
+    }
+  }
+
   table.appendChild(fila);
 }
 
@@ -137,11 +187,11 @@ const headerTable = (table) => {
  */
 const filtros = (table) => {
   let fila = generateRow();
-  let array = ["dataPresentacion", "name", "dni", "telf", "email", "titulacionPracticas"]; // QUIZA HAYA QUE CAMBIARLO O GENERARLOS DE OTRA FORMA
+  let headerContent = ["dataPresentacion", "name", "dni", "telf", "email", "titulacionPracticas"]; // QUIZA HAYA QUE CAMBIARLO O GENERARLOS DE OTRA FORMA
 
   const generateInput = () => document.createElement('input')
 
-  array.forEach(element => {
+ headerContent.forEach(element => {
     let elementBusqueda = generateCell();
     let elementInput = generateInput()
     elementInput.setAttribute('name', `${element}`);
@@ -155,3 +205,5 @@ const filtros = (table) => {
 
   table.appendChild(fila);
 }
+
+
