@@ -38,7 +38,7 @@ export const generateTableOffers = () => {
 const printCell = (element, fila) => {
   for (const prop in element) {
     let cell = generateCell();
-    cell.innerHTML = element[prop];
+    cell.innerText = element[prop];
     fila.appendChild(cell)
   }
 }
@@ -91,7 +91,7 @@ const headerTable = (table) => {
     if (headerContent.hasOwnProperty(key)) {
 
       let elementoCabecera = generateHeaderCell();
-      elementoCabecera.innerHTML = headerContent[key];
+      elementoCabecera.innerText = headerContent[key];
       let botonSort = document.createElement('button');
       botonSort.innerText = "sort";
       botonSort.setAttribute('name', `${key}`)

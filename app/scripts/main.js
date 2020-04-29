@@ -9,7 +9,7 @@ window.onload = () =>{
     navigationBar();
 }
 
-const navigationBar = () => { 
+const navigationBar = () => {
     let navBar = document.getElementById('navbar');
     let lista = document.createElement('ul');
 
@@ -18,7 +18,7 @@ const navigationBar = () => {
 
     //GENERAR LOS SIGUIENTES BOTONES
 
-    navBar.appendChild(lista);    
+    navBar.appendChild(lista);
 }
 
 const newLink = (lista, evento, nombre) => {
@@ -26,9 +26,9 @@ const newLink = (lista, evento, nombre) => {
     let linkElement = document.createElement('button');
 
 
-    linkElement.innerHTML = nombre;
+    linkElement.innerText = nombre;
     linkElement.addEventListener("click", evento, false);
-    
+
     listElement.appendChild(linkElement);
     lista.appendChild(listElement);
 }

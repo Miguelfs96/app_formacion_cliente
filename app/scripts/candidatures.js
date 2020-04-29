@@ -84,7 +84,7 @@ const sortTable = (e) => {
 
 /**
  * Repinta el cuerpo de la tabla a partir de un headerContent de objetos
- * @param  headerContent} resultados
+ * @param  {Array} resultados
  */
 const reprint = (resultados) => {
   let tbody = document.getElementById('tableBody');
@@ -107,7 +107,7 @@ const reprint = (resultados) => {
 const printCell = (element, fila) => {
   for (const prop in element) {
     let cell = generateCell();
-    cell.innerHTML = element[prop];
+    cell.innerText = element[prop];
     fila.appendChild(cell)
   }
 }
@@ -165,7 +165,7 @@ const headerTable = (table) => {
     if  (headerContent.hasOwnProperty(key)) {
 
       let elementoCabecera = generateHeaderCell();
-      elementoCabecera.innerHTML = headerContent[key];
+      elementoCabecera.innerText = headerContent[key];
       let botonSort = document.createElement('button');
       botonSort.innerText = "sort";
       botonSort.setAttribute('name', `${key}`)
@@ -183,7 +183,7 @@ const headerTable = (table) => {
 
 /**
  * Genera la fila de filtros en una tabla y la agrega al nodo
- * @param {nodo} table
+ * @param {Node} table
  */
 const filtros = (table) => {
   let fila = generateRow();
