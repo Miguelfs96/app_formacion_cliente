@@ -1,3 +1,4 @@
+import{generarDetails} from './contenidoDetalleCandidatura.js'
 
 export const generateHeaderCell = () => document.createElement('th');
 export const generateRow = () => document.createElement('tr');
@@ -38,14 +39,16 @@ export const headerTable = (table, headerContent, dataElements, reducidor) => {
 /**
  * Repinta el cuerpo de la tabla a partir de un headerContent de objetos
  * @param  {Array} resultados
+ * @param  {Object} detalle
  */
-export const reprint = (resultados, reducidor) => {
+export const reprint = (resultados, reducidor, detalle) => {
   let tbody = document.getElementById('tableBody');
   tbody.innerText = '';
 
   resultados.reduce(reducidor, [])
     .forEach(element => {
       let fila = generateRow();
+      fila.onclick = (e) => generarDetails(e, detalle);
       printCell(element, fila);
       tbody.appendChild(fila);
     });
@@ -94,7 +97,7 @@ const sortTable = (e, dataElements, reducidor) => {
      return 0;
   })
   console.log(dataSorted)
-  reprint(dataSorted, reducidor);
+  reprint(dataSorted, reducidor, dataElements);
 }
 
 /**
@@ -166,5 +169,5 @@ const busqueda = (e, dataElements, reducidor) => {
     return isValid;
 
   });
-  reprint(result,reducidor);
+  reprint(result,reducidor, dataElements);
 };

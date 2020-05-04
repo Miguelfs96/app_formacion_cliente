@@ -1,12 +1,14 @@
 import * as data from '../data/offer.json';
 import{headerTable, reprint, printCell, resetTable, generateCell, generateRow, generateHeaderCell, filtros} from './tableUtils.js';
+import{generarDetails} from './contenidoDetalleCandidatura.js'
 
 //VARIABLES GLOBALES
 const search = {};
 
-const filterArray = ["dataPresentacion", "horaPresentacion", "companyData", "requestPrimaryTitulation", "endDate"];
+const filterArray = ["idInternshipOffer", "dataPresentacion", "horaPresentacion", "companyData", "requestPrimaryTitulation", "endDate"];
 
-const headerContent = {                       //variable extraible
+const headerContent = {
+  idInternshipOffer: "ID OFFerta",                      //variable extraible
   dataPresentacion: "Fecha",
   horaPresentacion: "Hora",
   companyData: "Nombre",
@@ -21,7 +23,14 @@ const dataElements = data.internshipOffer;
  * y la fila de busqueda
  */
 export const generateTableOffers = () => {
-  let tabla = document.getElementById('tablaPrincipal');
+  let container = document.getElementById('container');
+
+  container.innerText = '';
+
+  let tabla = document.createElement('table');
+  tabla.setAttribute('id', "tablaPrincipal");
+  container.appendChild(tabla);
+
   let tbody = document.createElement('tbody');
   tbody.setAttribute('id', 'tableBody');
   resetTable(tabla);
@@ -31,10 +40,14 @@ export const generateTableOffers = () => {
   dataElements.reduce(reducidor, [])
     .forEach(element => {
       let fila = generateRow();
+
+      fila.onclick = (e) => generarDetails(e, dataElements);
       printCell(element, fila);
       tbody.appendChild(fila);
     });
   tabla.appendChild(tbody);
+
+  container.appendChild(tabla);
 }
 
 /**
@@ -42,8 +55,9 @@ export const generateTableOffers = () => {
  * @param {Array} accum
  * @param {Object} param1
  */
-const reducidor = (accum, {dataPresentacion, horaPresentacion, companyData, requestPrimaryTitulation, endDate}) => {
+const reducidor = (accum, {idInternshipOffer, dataPresentacion, horaPresentacion, companyData, requestPrimaryTitulation, endDate}) => {
   accum.push({
+    idInternshipOffer,
     dataPresentacion,
     horaPresentacion,
     name: `${companyData.company}`,

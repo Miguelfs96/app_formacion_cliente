@@ -1,10 +1,13 @@
 import * as data from '../data/candidatures.json';
 import{headerTable, reprint, printCell, resetTable, generateCell, generateRow, generateHeaderCell, filtros} from './tableUtils.js';
+import{generarDetails} from './contenidoDetalleCandidatura.js'
+
 
 //VARIABLES GLOBALES
 const search = {};
 
 const headerContent = {           //variable extraible
+  idCandidate: "ID",
   dataPresentacion: "Fecha",
   name: "Nombre",
   dni: "DNI",
@@ -13,7 +16,7 @@ const headerContent = {           //variable extraible
   titulacionPracticas: "Titulo"
 };
 
-let filterArray = ["dataPresentacion", "name", "dni", "telf", "email", "titulacionPracticas"]; // QUIZA HAYA QUE CAMBIARLO O GENERARLOS DE OTRA FORMA
+let filterArray = ["idCandidate", "dataPresentacion", "name", "dni", "telf", "email", "titulacionPracticas"]; // QUIZA HAYA QUE CAMBIARLO O GENERARLOS DE OTRA FORMA
 
 const dataElements = data.candidatures;
 
@@ -22,7 +25,15 @@ const dataElements = data.candidatures;
  * y una fila de busqueda
  */
 export const generateTableCandidates = () => {
-  let tabla = document.getElementById("tablaPrincipal");
+  //let tabla = document.getElementById("tablaPrincipal");
+  let container = document.getElementById('container');
+
+  container.innerText = '';
+
+  let tabla = document.createElement('table');
+  tabla.setAttribute('id', "tablaPrincipal");
+  container.appendChild(tabla);
+
   let tbody = document.createElement('tbody');
   tbody.setAttribute('id', 'tableBody')
   resetTable(tabla);
@@ -33,10 +44,15 @@ export const generateTableCandidates = () => {
     .reduce(reducidor, [])
     .forEach(element => {
       let fila = generateRow();
+      // console.log(element);
+      // fila.setAttribute("id", `${element.}`)
+      fila.onclick = (e) => generarDetails(e, dataElements);
       printCell(element, fila);
       tbody.appendChild(fila);
     });
   tabla.appendChild(tbody);
+
+  container.appendChild(tabla);
 }
 
 /**
@@ -44,8 +60,9 @@ export const generateTableCandidates = () => {
  * @param  headerContent} accum
  * @param {Object} param1
  */
-const reducidor = (accum, {dataPresentacion, name, surname, dni, telf, email, titulacionPracticas}) => {
+const reducidor = (accum, {idCandidate, dataPresentacion, name, surname, dni, telf, email, titulacionPracticas}) => {
   accum.push({
+    idCandidate,
     dataPresentacion,
     name: `${name} ${surname}`,
     dni,
