@@ -1,0 +1,40 @@
+#navBarB{
+  height: 4vh;
+  padding: 0px;
+  padding-left: 1vw;
+  padding-right: 1vw;
+  background-color:rgb(116, 116, 116);
+
+}
+
+#navBarB > ul{
+  padding:0;
+
+}
+#navBarB button{
+  height: 4vh;
+  width: 18vw;
+}
+
+form{
+  padding-top: 3vh;
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+
+}
+
+form label{
+	margin:0 0 3px 0;
+  padding:0px;
+  padding-right: 3px;
+
+}
+
+ form input {
+  margin-right: 3px;
+  margin-bottom: 2px;
+  height: 2vh;
+  width: 15vh;
+	box-shadow: 0 0 8px rgb(185, 185, 185);
+	border: 1px solid rgb(22, 22, 22);
+ }
