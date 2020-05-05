@@ -13,13 +13,13 @@ export const generarDetails = (e, data) => {
   let elemento = data.find(element => (element.idCandidate == idValue || element.idInternshipOffer == idValue));
   const formulario = document.createElement('form'); //generacion de formulario
   generarImputs(elemento, formulario);
-  generateNavegation(data);
+  generateNavegation(elemento, formulario);
   document.getElementById("container").appendChild(formulario);
 }
 
 
-const generateNavegation = (data) =>{
-  const botones = ["Informacion Personal", "Titulaciones", "Direcciones"];
+const generateNavegation = (data, formulario) =>{
+  const botones = ["Informacion Personal", "Titulaciones", "Direcciones"];  //especifico candidatura
   let navBarB = document.createElement('nav');
   navBarB.setAttribute('id', 'navBarB');
   let listNavB = document.createElement('ul')
@@ -28,6 +28,17 @@ const generateNavegation = (data) =>{
     let elementNavB = document.createElement('li');
     let buttonNav = document.createElement('button');
 
+    switch (element){
+      case 'Informacion Personal':
+        buttonNav.onclick = () => generarImputs(data, formulario);
+        break;
+      case 'Titulaciones':
+        buttonNav.onclick = () => generarImputs(data.titulacionPracticas, formulario);
+        break;
+      case 'Direcciones':
+        buttonNav.onclick = () => generarImputs(data.primaryAddress, formulario);
+        break;
+    }
     buttonNav.innerText = element;
     elementNavB.appendChild(buttonNav);
     listNavB.appendChild(elementNavB);
@@ -42,6 +53,8 @@ const generateNavegation = (data) =>{
  * @param {node} formulario
  */
 const generarImputs = (object, formulario) =>{
+  formulario.innerText = '';
+  console.log(object)
   for (const key in object) {
     if (object.hasOwnProperty(key)) {
       if (typeof object[key] != "object") {

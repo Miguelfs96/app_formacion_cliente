@@ -17,6 +17,7 @@
 }
 
 form{
+  border: 1px, rgb(116, 116, 116), solid;
   padding-top: 3vh;
   display: grid;
   grid-template-columns: auto auto auto auto;
@@ -24,6 +25,7 @@ form{
 }
 
 form label{
+  font-size: 12px;
 	margin:0 0 3px 0;
   padding:0px;
   padding-right: 3px;
