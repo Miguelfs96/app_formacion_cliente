@@ -4,16 +4,23 @@
   padding-left: 1vw;
   padding-right: 1vw;
   background-color:rgb(116, 116, 116);
+  display: flex;
 
 }
 
 #navBarB > ul{
   padding:0;
+  position: relative;
+  width: 100%;
+}
 
+#navBarB li{
+  display: flex;
+  width: 100%;
 }
 #navBarB button{
   height: 4vh;
-  width: 18vw;
+  width: 100%;
 }
 
 form{
@@ -40,3 +47,7 @@ form label{
 	box-shadow: 0 0 8px rgb(185, 185, 185);
 	border: 1px solid rgb(22, 22, 22);
  }
+
+
+
+

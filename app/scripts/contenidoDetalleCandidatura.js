@@ -2,24 +2,34 @@ const resetMainContain = () => {
   document.getElementById("container").innerText = '';
 }
 
+const botonesCandiatures = ["Informacion Personal", "Titulaciones", "Direcciones"];
+const botonesOfertas = ["Informacion Oferta", "Company", "Primary Titulations", "Localizacion"];
+
+
 /**
  * Genera los detalles de un objeto
  * @param {event} e
  * @param {array} data
  */
 export const generarDetails = (e, data) => {
+
   resetMainContain();
   const idValue = e.currentTarget.firstChild.textContent;
   let elemento = data.find(element => (element.idCandidate == idValue || element.idInternshipOffer == idValue));
   const formulario = document.createElement('form'); //generacion de formulario
   generarImputs(elemento, formulario);
-  generateNavegation(elemento, formulario);
+
+  if (elemento.idCandidate != undefined){                                 //DISCUTIBLE
+    generateNavegation(botonesCandiatures, elemento, formulario);
+  }else{
+    generateNavegation(botonesOfertas, elemento, formulario);
+  }
   document.getElementById("container").appendChild(formulario);
 }
 
 
-const generateNavegation = (data, formulario) =>{
-  const botones = ["Informacion Personal", "Titulaciones", "Direcciones"];  //especifico candidatura
+const generateNavegation = (botones, data, formulario) =>{
+
   let navBarB = document.createElement('nav');
   navBarB.setAttribute('id', 'navBarB');
   let listNavB = document.createElement('ul')
@@ -37,6 +47,18 @@ const generateNavegation = (data, formulario) =>{
         break;
       case 'Direcciones':
         buttonNav.onclick = () => generarImputs(data.primaryAddress, formulario);
+        break;
+      case 'Informacion Oferta':
+        buttonNav.onclick = () => generarImputs(data, formulario);
+        break;
+      case 'Company':
+        buttonNav.onclick = () => generarImputs(data.companyData, formulario);
+        break;
+      case 'Primary Titulations':
+        buttonNav.onclick = () => generarImputs(data.requestPrimaryTitulation, formulario);
+        break;
+      case 'Localizacion':
+        buttonNav.onclick = () => generarImputs(data.internshipLocation, formulario);
         break;
     }
     buttonNav.innerText = element;
